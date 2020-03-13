@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Todos from './todos';
 import AddTodo from './add-todo';
-import GetTodos, { DeleteTodo } from './todoService';
+import GetTodos, { DeleteTodo, PostTodo } from './todoService';
 import './index.css';
 
 
@@ -22,6 +22,14 @@ class App extends Component {
       console.log('get todos error ->', err)
     });
   }
+
+  addTodo = (todo) => {
+    PostTodo(todo)
+      .then(data => {
+        console.log(data)
+        this.setState({ todos: [ ...this.state.todos, data ] })
+      })
+  }
   
   deleteTodo = (id) => {
     DeleteTodo(id)
@@ -34,13 +42,6 @@ class App extends Component {
     }).catch(err => {
       console.log('delete todos error ->', err)
     });
-  }
-  
-  addTodo = (todo) => {
-    todo.id = this.state.id;
-    this.setState({ id: this.state.id + 1 })
-    let todos = [ ...this.state.todos, todo ];
-    this.setState({ todos: todos })
   }
   
   render() {

@@ -12,6 +12,20 @@ export default function GetTodos() {
         });
 }
 
+export function PostTodo(todo) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: todo, done: false })
+    }
+
+    return fetch(`http://127.0.0.1:8200/todo`, requestOptions)
+        .then(res => res.json())
+        .catch(err => {
+            console.log(err);
+        });
+}
+
 export function PutTodo(id, done) {
     const requestOptions = {
         method: 'PATCH',
