@@ -2,22 +2,35 @@ import React, { Component } from 'react';
 
 import Todos from './todos';
 import AddTodo from './add-todo';
+import GetTodos, { DeleteTodo } from './todoService';
 
 
 class App extends Component {
   state = {
-    id: 3,
-    todos: [
-      { id: 1, content: 'buy some cheetos' },
-      { id: 2, content: 'play mario kart' }
-    ]
+    todos: [ ]
+  }
+
+  componentDidMount() {
+    GetTodos()
+      .then(res => {
+        console.log(res)
+        this.setState({ todos: res });
+      }).catch(err => {
+        console.log('get todos error ->', err)
+      });
   }
 
   deleteTodo = (id) => {
-    const todos = this.state.todos.filter(todo => {
-      return todo.id !== id
-    });
-    this.setState({ todos: todos })
+    DeleteTodo(id)
+      .then(res => {
+        this.setState({
+          todos: this.state.todos.filter(todo => {
+              return todo.id !== id
+          })
+        });
+      }).catch(err => {
+        console.log('delete todos error ->', err)
+      });
   }
 
   addTodo = (todo) => {
@@ -29,10 +42,20 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <h1>Todos</h1>
-        <Todos todos={ this.state.todos } deleteTodo={ this.deleteTodo } />
-        <AddTodo addTodo={ this.addTodo } />
+        <AddTodo className='add-todo' addTodo={ this.addTodo } />
+        {/* <Todos todos={ this.state.todos } deleteTodo={ this.deleteTodo } /> */}
+
+        { this.state.todos ? (
+            this.state.todos.map(todo => {
+                return (
+                    <Todos todo={ todo } addTodo={ this.addTodo } deleteTodo={ this.deleteTodo } />
+                )
+            })
+        ) : (
+            <p className='center'>You have no todos</p>
+        )}
       </div>
     );
   }
