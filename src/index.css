@@ -31,6 +31,13 @@
     align-items: center;
     width: 80%;
   }
+  .todo {
+    display: flex;
+    align-items: center;
+  }
+  .todo p {
+    padding-left: .5em;
+  }
   .done {
     color: black;
     text-decoration: line-through;

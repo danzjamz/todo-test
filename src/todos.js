@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { PutTodo } from './todoService';
 
-const Todos = ({todo, deleteTodo}) => {
+// const Todos = ({todo, deleteTodo}) => {
+export default class Todos extends Component {
+    constructor(props) {
+        super(props);
 
-    let done = todo.done;
+        this.state = {
+            done: this.props.todo.done
+        }
+    }
 
-    return (
-        <div className='todo-item' key={ todo.id }>
-            <span >{ todo.title }</span>
-            <button onClick={ () => deleteTodo(todo.id) }>Delete</button>
-        </div>
-    )
+    toggleDone = (id) => {
+        PutTodo(id, !this.state.done)
+            .then(res => {
+                this.setState({ done: res.done })
+            });
+    }
+
+    render() {
+        return (
+            <div className='todo-item'>
+                <div className='todo'>
+                    <input type='checkbox' checked={ this.state.done } onChange={ () => this.toggleDone(this.props.todo.id) } />
+                    <p className={ this.state.done ? 'done' : null }>{ this.props.todo.title }</p>
+                </div>
+                <button onClick={ () => this.props.deleteTodo(this.props.todo.id) }>Delete</button>
+            </div>
+        )
+    }
 }
-
-export default Todos;

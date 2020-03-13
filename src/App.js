@@ -22,7 +22,7 @@ class App extends Component {
 
   deleteTodo = (id) => {
     DeleteTodo(id)
-      .then(res => {
+      .then(() => {
         this.setState({
           todos: this.state.todos.filter(todo => {
               return todo.id !== id
@@ -50,7 +50,7 @@ class App extends Component {
         { this.state.todos ? (
             this.state.todos.map(todo => {
                 return (
-                    <Todos todo={ todo } addTodo={ this.addTodo } deleteTodo={ this.deleteTodo } />
+                    <Todos key={ todo.id } todo={ todo } deleteTodo={ this.deleteTodo } />
                 )
             })
         ) : (

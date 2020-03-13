@@ -12,6 +12,20 @@ export default function GetTodos() {
         });
 }
 
+export function PutTodo(id, done) {
+    const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ done: done })
+    }
+
+    return fetch(`http://127.0.0.1:8200/todo/${ id }`, requestOptions)
+        .then(res => res.json())
+        .catch(err => {
+            console.log(err);
+        });
+}
+
 export function DeleteTodo(id) {
     const requestOptions = {
         method: 'DELETE',
