@@ -5,7 +5,7 @@ export default function GetTodos() {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     }
-    return fetch('http://127.0.0.1:8200/todos', requestOptions)
+    return fetch('https://danzjamz-todo-api.herokuapp.com/todos', requestOptions)
         .then(res => res.json())
         .catch(err => {
             console.log(err);
@@ -19,7 +19,7 @@ export function PostTodo(todo) {
         body: JSON.stringify({ title: todo, done: false })
     }
 
-    return fetch(`http://127.0.0.1:8200/todo`, requestOptions)
+    return fetch(`https://danzjamz-todo-api.herokuapp.com/todo`, requestOptions)
         .then(res => res.json())
         .catch(err => {
             console.log(err);
@@ -33,7 +33,7 @@ export function PutTodo(id, done) {
         body: JSON.stringify({ done: done })
     }
 
-    return fetch(`http://127.0.0.1:8200/todo/${ id }`, requestOptions)
+    return fetch(`https://danzjamz-todo-api.herokuapp.com/todo/${ id }`, requestOptions)
         .then(res => res.json())
         .catch(err => {
             console.log(err);
@@ -46,7 +46,7 @@ export function DeleteTodo(id) {
         headers: { 'Content-Type': 'application/json' }
     }
 
-    return fetch(`http://127.0.0.1:8200/todo/${ id }`, requestOptions)
+    return fetch(`https://danzjamz-todo-api.herokuapp.com/todo/${ id }`, requestOptions)
         .then(res => console.log(res))
         .catch(err => {
             console.log(err);
